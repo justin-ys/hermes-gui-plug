@@ -7,3 +7,4 @@ provides_tools:
   - gui_move_mouse
   - gui_click
   - gui_type
+  - gui_key
