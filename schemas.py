@@ -98,6 +98,46 @@ GUI_CLICK_SCHEMA: Dict[str, Any] = {
     },
 }
 
+GUI_KEY_SCHEMA: Dict[str, Any] = {
+    "name": "gui_key",
+    "description": (
+        "Press one or more keyboard keys. A single key performs a simple press "
+        "(e.g. enter, tab, escape, backspace). Multiple keys are held simultaneously "
+        "as a chord (e.g. ['ctrl', 'c'] for copy, ['ctrl', 'shift', 'z'] for redo). "
+        "Use 'ctrl' on Windows/Linux and 'command' on macOS for modifier-based shortcuts. "
+        "Common names: enter, tab, escape, backspace, delete, space, "
+        "up, down, left, right, home, end, pageup, pagedown, "
+        "ctrl, shift, alt, command, f1–f12."
+    ),
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "keys": {
+                "type": "array",
+                "items": {"type": "string"},
+                "minItems": 1,
+                "description": (
+                    "Key name(s) to press. One key = simple press; "
+                    "multiple keys = chord (all held simultaneously)."
+                ),
+            },
+            "presses": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "How many times to repeat. Default: 1.",
+            },
+            "interval": {
+                "type": "number",
+                "description": (
+                    "Seconds between each repetition (presses > 1) "
+                    "or between keys within a chord. Default: 0."
+                ),
+            },
+        },
+        "required": ["keys"],
+    },
+}
+
 GUI_TYPE_SCHEMA: Dict[str, Any] = {
     "name": "gui_type",
     "description": (

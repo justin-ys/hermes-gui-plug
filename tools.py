@@ -179,6 +179,43 @@ def gui_click(args: Dict[str, Any], **kwargs: Any) -> str:
         return _err(f"Click failed: {exc}")
 
 
+def gui_key(args: Dict[str, Any], **kwargs: Any) -> str:
+    del kwargs
+    keys = args.get("keys")
+    if isinstance(keys, str):
+        keys = [keys]
+    if not isinstance(keys, list) or len(keys) == 0:
+        return _err("keys must be a non-empty list of key name strings")
+
+    try:
+        presses = int(args.get("presses") or 1)
+    except (TypeError, ValueError):
+        return _err("presses must be a positive integer")
+    if presses < 1:
+        return _err("presses must be at least 1")
+
+    interval = float(args.get("interval") or 0)
+    if interval < 0:
+        return _err("interval must be non-negative")
+
+    try:
+        pyautogui = _import_pyautogui()
+        invalid = [k for k in keys if k not in pyautogui.KEYBOARD_KEYS]
+        if invalid:
+            return _err(
+                f"Unknown key name(s): {invalid}",
+                valid_keys=sorted(pyautogui.KEYBOARD_KEYS),
+            )
+        if len(keys) == 1:
+            pyautogui.press(keys[0], presses=presses, interval=interval)
+        else:
+            for _ in range(presses):
+                pyautogui.hotkey(*keys, interval=interval)
+        return _ok(keys=keys, presses=presses)
+    except Exception as exc:
+        return _err(f"Key press failed: {exc}")
+
+
 def gui_type(args: Dict[str, Any], **kwargs: Any) -> str:
     del kwargs
     text = args.get("text")
