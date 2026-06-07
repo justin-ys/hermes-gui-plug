@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68,<82"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-gui-plug"
+version = "1.0.0"
+description = "Hermes Agent plugin — PyAutoGUI desktop automation (screenshot, mouse, keyboard)."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "pyautogui>=0.9.54,<1",
+    "pyperclip>=1.9.0,<2",
+]
+
+[project.entry-points."hermes_agent.plugins"]
+hermes-gui-plug = "hermes_gui_plug_entry"
+
+[tool.setuptools]
+py-modules = ["hermes_gui_plug_entry", "schemas", "tools"]
