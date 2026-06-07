@@ -1,7 +1,7 @@
 name: hermes-gui-plug
 version: 1.0.0
 description: "Cross-platform desktop GUI automation via PyAutoGUI — screenshot, mouse move, click, and keyboard input."
-author: NousResearch
+author: Justin
 provides_tools:
   - gui_screenshot
   - gui_move_mouse
